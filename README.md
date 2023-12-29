@@ -28,24 +28,18 @@ docker-compose up -d
 ```
 This will set up Kafka, Spark, Elasticsearch, and Kibana.
 
-### 2. Copy Spark Consumer Script
-Transfer the pyspark_consumer.py script to the Spark master container.
 
-```sh
-docker cp -L ./pyspark_consumer.py spark-master:/opt/bitnami/spark/pyspark_consumer.py
-```
-
-### 3. Submit the Spark Job
+### 2. Submit the Spark Job
 Run the Spark job to start processing the streaming data.
 
 ```sh
 docker-compose exec spark-master spark-submit \
 --class consumer \
---packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.2.4,org.elasticsearch:elasticsearch-spark-30_2.12:7.17.0,commons-httpclient:commons-httpclient:3.1 \
+--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.2.4,org.elasticsearch:elasticsearch-spark-30_2.12:8.8.2,commons-httpclient:commons-httpclient:3.1 \
 pyspark_consumer.py
 ```
 
-### 4. Run Kafka Producer Script
+### 3. Run Kafka Producer Script
 Execute the Kafka producer script to send data to the Kafka topic.
 
 ```sh
@@ -54,7 +48,7 @@ python ./kafka_producer.py
 
 Ensure to replace the apiKey in the kafka_producer.py script with your own API key.
 
-### 5. Visualize Data in Kibana
+### 4. Visualize Data in Kibana
 Access Kibana by visiting http://localhost:5601. Set up an index pattern for Elasticsearch data and create a dashboard with a map visualization to view the status of the cycling stations.
 
 ## Kibana Dashboard Visualization Example
