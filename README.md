@@ -25,7 +25,6 @@ Before running the services, you need to build the Docker images and initialize 
 ```sh
 docker-compose build
 docker-compose up -d
-
 ```
 This will set up Kafka, Spark, Elasticsearch, and Kibana.
 
@@ -34,7 +33,6 @@ Transfer the pyspark_consumer.py script to the Spark master container.
 
 ```sh
 docker cp -L ./pyspark_consumer.py spark-master:/opt/bitnami/spark/pyspark_consumer.py
-
 ```
 
 ### 3. Submit the Spark Job
@@ -45,24 +43,26 @@ docker-compose exec spark-master spark-submit \
 --class consumer \
 --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.2.4,org.elasticsearch:elasticsearch-spark-30_2.12:7.17.0,commons-httpclient:commons-httpclient:3.1 \
 pyspark_consumer.py
-
-
-
 ```
 
 ### 4. Run Kafka Producer Script
 Execute the Kafka producer script to send data to the Kafka topic.
 
 ```sh
-
 python ./kafka_producer.py
-
 ```
 
 Ensure to replace the apiKey in the kafka_producer.py script with your own API key.
 
 ### 5. Visualize Data in Kibana
 Access Kibana by visiting http://localhost:5601. Set up an index pattern for Elasticsearch data and create a dashboard with a map visualization to view the status of the cycling stations.
+
+## Kibana Dashboard Visualization Example
+
+Below is a screenshot of the Kibana dashboard showing the data filtered to display cycling stations where `available_bike_stands == 0`:
+
+![Kibana Dashboard Visualization](./images/map-available-bike.png)
+
 
 Conclusion
 This project provides a comprehensive solution for monitoring cycling stations in real-time. By leveraging a robust data pipeline and advanced visualization tools, it delivers critical insights promptly and effectively. Customize the system according to your specific needs and enjoy a deeper understanding of cycling station dynamics.
