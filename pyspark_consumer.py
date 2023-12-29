@@ -94,9 +94,9 @@ data = json_df.writeStream \
         .outputMode("append")\
         .option("es.nodes", "elasticsearch")\
         .option("es.port", "9200")\
-        .option("es.resource", "bike")\
+        .option("es.resource", index_name)\
         .option("es.nodes.wan.only", "true") \
         .option("checkpointLocation", "tmp/") \
         .start()
 
-query.awaitTermination()
+data.awaitTermination()

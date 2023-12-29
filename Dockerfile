@@ -5,7 +5,8 @@ FROM bitnami/spark:3.2.4
 USER root
 
 
-
+# Copy the pyspark_consumer.py script into a directory in the container
+COPY ./pyspark_consumer.py /opt/bitnami/spark/
 # Install Scala 2.12
 RUN curl -LO https://downloads.lightbend.com/scala/2.12.15/scala-2.12.15.tgz && \
     tar -xzvf scala-2.12.15.tgz -C /opt/ && \

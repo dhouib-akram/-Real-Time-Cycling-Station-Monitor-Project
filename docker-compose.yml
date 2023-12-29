@@ -31,7 +31,7 @@ services:
 
   elasticsearch:
     container_name: elasticsearch-cntr
-    image: elasticsearch:7.9.1
+    image: bitnami/elasticsearch:8.8.2
     environment:
       - cluster.name=kafka-cluster
       - bootstrap.memory_lock=true
@@ -67,7 +67,7 @@ services:
 
   kibana:
     container_name: kibana-cntr
-    image: kibana:7.9.1
+    image: bitnami/kibana:8.8.2
     ulimits:
       memlock:
         soft: -1

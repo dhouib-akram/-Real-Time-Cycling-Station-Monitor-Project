@@ -59,10 +59,20 @@ Access Kibana by visiting http://localhost:5601. Set up an index pattern for Ela
 
 ## Kibana Dashboard Visualization Example
 
+### Map Chart - Available Bike Stands
+
 Below is a screenshot of the Kibana dashboard showing the data filtered to display cycling stations where `available_bike_stands == 0`:
 
 ![Kibana Dashboard Visualization](./images/map-available-bike.png)
 
+### Pie Chart - Available Bike Stands
+The pie chart below represents the distribution of cycling stations with no available bike stands across different contract names for the latest timestamp. This visualization helps to quickly identify which areas are experiencing a high demand for bikes and may require restocking.
 
+![Pie Chart of Available Bike Stands](images/available_bike_stands_0.png)
+
+### Line Graph - Station Status Over Time
+The line graph displayed here shows the number of available bike stands, total bike stands, and available bikes over a 6-minute window. This time-based visualization provides insights into usage patterns, peak times, and potential shortages, allowing for efficient management of the bike-sharing system.
+
+![Line Graph of Station Status](images/line_graph.png)
 Conclusion
 This project provides a comprehensive solution for monitoring cycling stations in real-time. By leveraging a robust data pipeline and advanced visualization tools, it delivers critical insights promptly and effectively. Customize the system according to your specific needs and enjoy a deeper understanding of cycling station dynamics.
