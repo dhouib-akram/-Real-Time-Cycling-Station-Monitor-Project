@@ -74,5 +74,5 @@ The pie chart below represents the distribution of cycling stations with no avai
 The line graph displayed here shows the number of available bike stands, total bike stands, and available bikes over a 6-minute window. This time-based visualization provides insights into usage patterns, peak times, and potential shortages, allowing for efficient management of the bike-sharing system.
 
 ![Line Graph of Station Status](images/line_graph.png)
-Conclusion
+## Conclusion
 This project provides a comprehensive solution for monitoring cycling stations in real-time. By leveraging a robust data pipeline and advanced visualization tools, it delivers critical insights promptly and effectively. Customize the system according to your specific needs and enjoy a deeper understanding of cycling station dynamics.
