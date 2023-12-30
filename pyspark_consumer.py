@@ -2,6 +2,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import from_json, col
 from pyspark.sql.types import *
 from elasticsearch import Elasticsearch
+from pyspark.sql.functions import to_timestamp
 
 # Create an Elasticsearch client
 es = Elasticsearch([{'host': 'elasticsearch', 'port': 9200, 'scheme': 'http'}])
@@ -22,18 +23,21 @@ mapping = {
     "mappings": {
         "properties": {
         "numbers": { "type": "integer" },
-        "contract_name": { "type": "text" },
-        "banking": { "type": "text" },
+        "contract_name": { "type": "keyword" },
+        "banking": { "type": "keyword" },
         "bike_stands": { "type": "integer" },
         "available_bike_stands": { "type": "integer" },
         "available_bikes": { "type": "integer" },
-        "address": { "type": "text" },
-        "status": { "type": "text" },
+        "address": { "type": "keyword" },
+        "status": { "type": "keyword" },
         "position": {
             "type": "geo_point"
         },
-        "timestamps": { "type": "text" }
-        }
+        "timestamps": {
+                "type": "date", 
+                "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"  
+            }       
+              }
     }
     }
 
@@ -78,7 +82,8 @@ kafka_df = spark \
 # Deserialize the JSON from the Kafka message
 json_df = kafka_df.selectExpr("CAST(value AS STRING)") \
     .select(from_json("value", schema).alias("data")) \
-    .select("data.*")
+    .select("data.*") \
+    .withColumn("timestamps", to_timestamp(col("timestamps"), "yyyy-MM-dd HH:mm:ss"))
 
 # Print the schema of the DataFrame
 json_df.printSchema()
@@ -86,7 +91,7 @@ json_df.printSchema()
 # Show the data read from Kafka on the console
 query = json_df \
     .writeStream \
-    .outputMode("append") \
+    .outputMode ("append") \
     .format("console") \
     .start()
 data = json_df.writeStream \
@@ -94,9 +99,10 @@ data = json_df.writeStream \
         .outputMode("append")\
         .option("es.nodes", "elasticsearch")\
         .option("es.port", "9200")\
-        .option("es.resource", index_name)\
+        .option("es.resource", "bike")\
         .option("es.nodes.wan.only", "true") \
         .option("checkpointLocation", "tmp/") \
         .start()
+
 
 data.awaitTermination()
