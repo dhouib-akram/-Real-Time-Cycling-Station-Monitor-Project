@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  Velib Cycling Stations Monitoring
+  Real-Time Cycling Station Monitor
 </h1>
 
 <div align="center">
