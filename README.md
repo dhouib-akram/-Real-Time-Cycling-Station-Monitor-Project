@@ -11,6 +11,9 @@ The Real-Time Cycling Station Monitor is a system designed to track and analyze 
 - **Elasticsearch**: Stores and indexes the processed data.
 - **Kibana**: Visualizes insights on an interactive dashboard, including a map highlighting stations with no available bikes.
 
+## Dockerized Environment 
+To ensure seamless operation and management, our Real-Time Cycling Station Monitor is built upon a Dockerized environment, encapsulating each component of the system within its own container. This approach not only fosters a modular architecture, making it easier to update and maintain individual parts without affecting the whole system, but also enhances scalability and fault tolerance. Each service, from Kafka for real-time data ingestion to Kibana for insightful visualizations, operates in an isolated yet interconnected manner through a custom Docker network. This setup not only reflects best practices in container orchestration but also provides a robust, scalable solution for real-time data processing and visualization. By adopting this architecture, users can enjoy a streamlined setup process, predictable behavior across environments, and a flexible system ready to adapt to future needs and improvements.
+
 ## Prerequisites
 
 - Docker Desktop: Ensure Docker Desktop is installed and running on your system.
