@@ -67,6 +67,8 @@ schema = StructType([
 spark = SparkSession.builder \
     .appName("consumer") \
     .master("spark://spark-master:7077") \
+    .enableHiveSupport() \
+    .config("hive.metastore.uris", "thrift://hive-server:10000") \
     .getOrCreate()
 
 spark.sparkContext.setLogLevel("ERROR")
@@ -103,6 +105,13 @@ data = json_df.writeStream \
         .option("es.nodes.wan.only", "true") \
         .option("checkpointLocation", "tmp/") \
         .start()
+# Write data to Hive table
+json_df.writeStream \
+    .outputMode("append") \
+    .format("hive") \
+    .option("path", "/user/hive/warehouse/bike_data") \
+    .option("checkpointLocation", "/tmp/checkpoints/") \
+    .start("bike_data")
 
 
 data.awaitTermination()
