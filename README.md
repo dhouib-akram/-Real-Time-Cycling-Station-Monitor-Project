@@ -45,35 +45,56 @@ To ensure seamless operation and management, our Real-Time Cycling Station Monit
 
 ## Setup and Running Instructions
 
-### 1. Build and Run Containers
+For setting up and running the Real-Time Cycling Station Monitor, we've provided convenient scripts that handle building containers, submitting Spark jobs, and running the Kafka producer script. Depending on your operating system, follow the instructions for Windows or Unix-like systems (Linux/MacOS).
 
-Before running the services, you need to build the Docker images and initialize the containers.
+### Windows Users:
 
-```sh
-docker-compose build
-docker-compose up -d
-```
-This will set up Kafka, Spark, Elasticsearch, and Kibana.
+1. **Run the Batch Script**: Navigate to your project directory in the command prompt and execute the `run.bat` script.
 
+    ```bash
+    .\run.bat
+    ```
 
-### 2. Submit the Spark Job
-Run the Spark job to start processing the streaming data.
+    This script performs the following operations:
+    - **Build and Run Containers**: Builds the Docker images and initializes the containers for Kafka, Spark, Elasticsearch, and Kibana.
+    - **Submit the Spark Job**: Submits a Spark job to process and analyze the data.
+    - **Run Kafka Producer Script**: Executes the Kafka producer script to send data to the Kafka topic.
 
-```sh
-docker-compose exec spark-master spark-submit \
---class consumer \
---packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.2.4,org.elasticsearch:elasticsearch-spark-30_2.12:8.8.2,commons-httpclient:commons-httpclient:3.1 \
-pyspark_consumer.py
-```
+### Unix-like System Users (Linux/MacOS):
 
-### 3. Run Kafka Producer Script
-Execute the Kafka producer script to send data to the Kafka topic.
+1. **Run the Shell Script**: Open your terminal, navigate to your project directory, and execute the `run.sh` script.
 
-```sh
-python ./kafka_producer.py
-```
+    ```bash
+    ./run.sh
+    ```
 
-Ensure to replace the apiKey in the kafka_producer.py script with your own API key.
+    This script performs similar operations as the Windows batch file:
+    - **Build and Run Containers**: Builds the Docker images and initializes the containers.
+    - **Submit the Spark Job**: Submits the Spark job.
+    - **Run Kafka Producer Script**: Executes the Kafka producer script.
+
+### After Running the Scripts:
+Once you've executed the appropriate script for your operating system:
+
+- **Check Container Status**: Verify that all containers are up and running using:
+
+    ```bash
+    docker-compose ps
+    ```
+
+- **Visualize Data in Kibana**: Access Kibana by visiting `http://localhost:5601`. Set up an index pattern for Elasticsearch data and create a dashboard with a map visualization to view the status of the cycling stations.
+
+- **Monitor Logs**: Check the logs for any services if needed using:
+
+    ```bash
+    docker-compose logs [service-name]
+    ```
+
+- **Stopping Services**: When you're done, you can stop all services using:
+
+    ```bash
+    docker-compose down
+    ```
 
 ### 4. Visualize Data in Kibana
 Access Kibana by visiting http://localhost:5601. Set up an index pattern for Elasticsearch data and create a dashboard with a map visualization to view the status of the cycling stations.

@@ -118,6 +118,23 @@ services:
       SPARK_MASTER_URL: spark://spark-master:7077
     networks:
       - kafka_esk_nw
+  hadoop:
+    image: bde2020/hadoop-base:2.0.0-hadoop3.2.1-java8
+    container_name: hadoop
+    networks:
+      - kafka_esk_nw
+
+  hive-server:
+    image: bde2020/hive:2.3.2-postgresql-metastore
+    container_name: hive-server
+    environment:
+      - HIVE_CORE_CONF_fs_defaultFS=hdfs://hadoop:8020
+    depends_on:
+      - hadoop
+    ports:
+      - "10000:10000" # Hive server port
+    networks:
+      - kafka_esk_nw
 
 
 networks:
